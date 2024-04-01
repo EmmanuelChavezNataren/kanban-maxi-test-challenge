@@ -1,15 +1,22 @@
 {
-  "name": "MaxiTestChallenge",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "name": "maxi-test-challenge",
+  "version": "1.0.0",
+  "author": "Emmanuel Chávez",
+  "homepage": "https://github.com/EmmanuelChavezNataren",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "postinstall:legacy": "npm install --legacy-peer-deps",
+    "sync": "ionic build --configuration=development && npx cap sync",
+    "serve:dev": "ionic serve --configuration development",
+    "serve:prod": "ionic serve --configuration production",
+    "debug:apk": "ionic capacitor run android --configuration development -l --external",
+    "debug:ios": "ionic capacitor run ios --configuration development -l --external",
+    "check": "ng lint && ng test --watch=false"
   },
   "private": true,
   "dependencies": {
@@ -60,5 +67,5 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.2.2"
   },
-  "description": "An Ionic project"
+  "description": "Tech Challenge for Front End Developer in DaCodes Consulting for MaxiTransfer"
 }
