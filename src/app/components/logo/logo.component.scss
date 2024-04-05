@@ -1,0 +1,6 @@
+ion-toolbar {
+  --background: transparent;
+  ion-icon[slot="start"] {
+    margin-inline-end: 0;
+  }
+}
