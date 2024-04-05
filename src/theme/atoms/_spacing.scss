@@ -1,0 +1,61 @@
+$step: 1;
+
+@for $index from 1 through 124 {
+  .pdd-left-#{$step} {
+    padding-left: #{$step}px !important;
+  }
+
+  .mrg-left-#{$step} {
+    margin-left: #{$step}px !important;
+  }
+
+  .pdd-right-#{$step} {
+    padding-right: #{$step}px !important;
+  }
+
+  .mrg-right-#{$step} {
+    margin-right: #{$step}px !important;
+  }
+
+  .pdd-top-#{$step} {
+    padding-top: #{$step}px !important;
+  }
+
+  .mrg-top-#{$step} {
+    margin-top: #{$step}px !important;
+  }
+
+  .mrg-bottom-#{$step} {
+    padding-bottom: #{$step}px !important;
+  }
+
+  .mrg-bottom-#{$step} {
+    margin-bottom: #{$step}px !important;
+  }
+
+  .pdd-x-#{$step} {
+    --padding-end: #{$step}px !important;
+    --padding-start: #{$step}px !important;
+    padding-left: #{$step}px !important;
+    padding-right: #{$step}px !important;
+  }
+
+  .pdd-y-#{$step} {
+    --padding-bottom: #{$step}px !important;
+    --padding-top: #{$step}px !important;
+    padding-bottom: #{$step}px !important;
+    padding-top: #{$step}px !important;
+  }
+
+  .mrg-x-#{$step} {
+    margin-left: #{$step}px !important;
+    margin-right: #{$step}px !important;
+  }
+
+  .mrg-y-#{$step} {
+    margin-bottom: #{$step}px !important;
+    margin-top: #{$step}px !important;
+  }
+
+  $step: $step + 1;
+}
