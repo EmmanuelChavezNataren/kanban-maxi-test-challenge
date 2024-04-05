@@ -1,0 +1,33 @@
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar>
+    <!-- MENU BUTTON -->
+    <ion-buttons slot="start" *ngIf="false">
+      <ion-menu-button />
+    </ion-buttons>
+    <!-- END MENU BUTTON -->
+
+    <!-- TITLE -->
+    <ion-title class="animated-move2down">{{ title }}</ion-title>
+    <!-- END TITLE -->
+
+    <ion-buttons slot="secondary">
+      <!-- DEFAULT TEXT BUTTON -->
+      <ion-button mode="md" shape="round" fill="solid" expand="block" class="animated-focus" *ngIf="hasActionable" (click)="onactionClick()" actionable color="main">
+        <ion-icon slot="start" size="small"  *ngIf="iconActionable" [src]="iconActionable.includes('svg') ? iconActionable : null"
+          [name]="!iconActionable.includes('svg') ? iconActionable : null"></ion-icon>
+        <ion-label>{{txtActionable}}</ion-label>
+      </ion-button>
+      <!-- END DEFAULT TEXT BUTTON -->
+    </ion-buttons>
+
+    <ion-buttons slot="primary">
+      <!-- DEFAULT ICON BUTTON -->
+      <ion-button class="animated-focus" *ngIf="hasIconBtn && iconBtn" (click)="oniconClick()" icon>
+        <ion-icon slot="icon-only" [src]="iconBtn.includes('svg') ? iconBtn : null"
+          [name]="!iconBtn.includes('svg') ? iconBtn : null"></ion-icon>
+      </ion-button>
+      <!-- END DEFAULT ICON BUTTON -->
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
