@@ -1,18 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
+import { Keyboard } from '@capacitor/keyboard';
+import { StatusBar } from '@capacitor/status-bar';
+import { MenuController } from '@ionic/angular';
+import { StorageHelper } from '@shared/helpers';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
-  public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
-  ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+export class AppComponent implements OnInit {
+  //Injects
+  #menu = inject(MenuController);
+  #storageHelper = inject(StorageHelper);
+
+  constructor() {
+    this.initializeApp();
+  }
+
+  /**
+   * Life Cycles
+   */
+
+  ngOnInit(): void {
+    this.menuHandler();
+  }
+
+  /**
+   * UI Events
+   */
+
+  private initializeApp() {
+    if (Capacitor.isNativePlatform()) {
+      StatusBar.setBackgroundColor({ color: 'var(--ion-toolbar-background)' });
+      Keyboard.hide();
+    }
+  }
+
+  private menuHandler() {
+    const isAuthtenticated = true;
+    /* !!(await this.#storageHelper.get('authToken')); */
+    if (isAuthtenticated) {
+      this.#menu.enable(true);
+    }
+    this.#menu.enable(false);
+  }
 }

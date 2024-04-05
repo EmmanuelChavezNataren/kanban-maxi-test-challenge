@@ -1,4 +1,4 @@
-export const enum NavigationItems {
+export const enum PathNames {
   auth = '/auth',
   dashboard = '/dashboard'
 }

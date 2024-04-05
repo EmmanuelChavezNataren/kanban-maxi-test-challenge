@@ -1,1 +1,1 @@
-export * from './navigation.enum';
+export * from './path.enum';
