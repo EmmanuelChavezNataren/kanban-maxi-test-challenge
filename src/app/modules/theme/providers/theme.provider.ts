@@ -15,8 +15,7 @@ export class ThemeProvider {
   }
 
   async initializeTheme() {
-    const savedTheme = !!(await this.#storage.getObject(StorageItems.darkMode));
-    console.log('savedTheme ', savedTheme);
+    const savedTheme = !!(await this.#storage.getObject(StorageItems.DarkMode));
     this.state.initializeTheme(savedTheme);
   }
 
