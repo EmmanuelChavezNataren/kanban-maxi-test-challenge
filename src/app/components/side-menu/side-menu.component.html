@@ -8,28 +8,30 @@
       <ion-label color="medium">
         <h3>
           <strong>
-            {{ listTitle }}
+            ALL BOARDS ({{ readBoards?.length }})
           </strong>
         </h3>
       </ion-label>
     </ion-list-header>
 
-    <ion-menu-toggle autoHide="false" *ngFor="let item of appPages; let i = index">
+    <ion-menu-toggle autoHide="false">
       <!-- BOARD LIST -->
-      <ion-item *ngIf="!item.hasButtonAdd && appPages.length" lines="none" detail="false" routerDirection="root"
-        [routerLink]="[item.url]" [ngClass]="{'activeItem': i === selectedIndex}" (click)="setSelectedIndex(i)">
+      @for (board of readBoards; track board) {
+      <ion-item *ngIf="readBoards?.length" lines="none" detail="false" [routerLink]="['']"
+        [ngClass]="{'activeItem': board === activeBoard}" (click)="selectBoard(board)">
         <ion-icon aria-hidden="true" slot="start" size="small" name="clipboard-outline" class="mrg-y-8" />
-        <ion-label class="fz-14 mrg-y-8 ion-text-nowrap">{{ item.title }}</ion-label>
+        <ion-label class="fz-14 mrg-y-8 ion-text-nowrap">{{ board }}</ion-label>
       </ion-item>
+      }
+
       <!-- END BOARD LIST -->
 
       <!-- ADD NEW BOARD -->
-      <ion-item button *ngIf="item.hasButtonAdd || !appPages.length " lines="none" detail="false"
-        (click)="openAddNewBoard()">
+      <ion-item button lines="none" detail="false" (click)="add()">
         <ion-icon aria-hidden="true" slot="start" name="clipboard-outline" color="tertiary" size="small"
           class="mrg-y-8" />
         <ion-label color="tertiary" class="fz-14 mrg-y-8 ion-text-nowrap">
-          <strong>{{ item.title }}</strong>
+          <strong>{{ '+ Create New Board' }}</strong>
         </ion-label>
       </ion-item>
       <!-- END ADD NEW BOARD -->

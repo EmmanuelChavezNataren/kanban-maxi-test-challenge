@@ -15,6 +15,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CoreBoardModule } from '@modules/board/core-board.module';
 
 const components = [SideMenuComponent, MainHeaderComponent];
 
@@ -32,6 +33,7 @@ const components = [SideMenuComponent, MainHeaderComponent];
       maxAge: 25,
       logOnly: environment.production,
     }),
+    CoreBoardModule
   ],
   providers: [
     {
