@@ -28,6 +28,7 @@ export const boardReducer: ActionReducer<State> = createReducer(
       ...state,
       isLoading: true,
       activeBoardName: '',
+      columns: [],
     })
   ),
   on(
@@ -48,6 +49,7 @@ export const boardReducer: ActionReducer<State> = createReducer(
       errorMessage: null,
       data: [...boards],
       activeBoardName: boards[0]?.name,
+      columns: boards[0]?.columns,
     })
   ),
   on(
