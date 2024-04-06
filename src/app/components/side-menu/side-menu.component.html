@@ -19,7 +19,7 @@
       <ion-item *ngIf="!item.hasButtonAdd && appPages.length" lines="none" detail="false" routerDirection="root"
         [routerLink]="[item.url]" [ngClass]="{'activeItem': i === selectedIndex}" (click)="setSelectedIndex(i)">
         <ion-icon aria-hidden="true" slot="start" size="small" name="clipboard-outline" class="mrg-y-8" />
-        <ion-label class="fz-14 mrg-y-8">{{ item.title }}</ion-label>
+        <ion-label class="fz-14 mrg-y-8 ion-text-nowrap">{{ item.title }}</ion-label>
       </ion-item>
       <!-- END BOARD LIST -->
 
@@ -28,7 +28,7 @@
         (click)="openAddNewBoard()">
         <ion-icon aria-hidden="true" slot="start" name="clipboard-outline" color="tertiary" size="small"
           class="mrg-y-8" />
-        <ion-label color="tertiary" class="fz-14 mrg-y-8">
+        <ion-label color="tertiary" class="fz-14 mrg-y-8 ion-text-nowrap">
           <strong>{{ item.title }}</strong>
         </ion-label>
       </ion-item>
@@ -39,14 +39,7 @@
 
 <ion-footer class="ion-no-border bg-content ion-padding-bottom ion-padding-horizontal">
   <!-- SWITCH THEME -->
-  <div class="dark-mode">
-    <ion-item lines="none" class="min-height-auto">
-      <ion-icon name="sunny" slot="start" color="medium" />
-      <ion-toggle aria-label="Appearance" labelPlacement="start" alignment="center" mode="ios" color="main">
-      </ion-toggle>
-      <ion-icon name="moon" slot="end" color="medium" />
-    </ion-item>
-  </div>
+  <app-theme-switcher />
   <!-- END SWITCH THEME -->
 
   <!-- HIDE SIDE-MENU -->

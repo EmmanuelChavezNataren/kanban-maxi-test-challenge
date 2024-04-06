@@ -1,31 +1,34 @@
 :host {
   --ion-background-color: var(--ion-content-background);
-  --ion-color-base: transparent;
   --ion-item-background: transparent;
   display: contents;
 }
 
-.dark-mode {
-  align-content: center;
-  background: var(--ion-color-dark);
-  border-radius: var(--radius-xs);
-  color: var(--ion-color-dark-contrast);
-  display: grid;
-  font-size: var(--font-size-xlg);
-  height: var(--input-height);
-  justify-content: space-around;
-  margin: var(--unit-s) auto;
-  ion-icon {
-    font-size: var(--icon-lg);
-    margin: var(--unit-s) var(--unit-X);
-  }
+ion-content {
+  --background: var(--ion-content-background);
 }
 
-.activeItem {
-  --background: var(--ion-color-main);
+ion-item {
+  --background-hover-opacity: 1;
+  --background-hover: var(--ion-color-main-contrast);
+  --color-hover: var(--ion-color-main);
   margin-inline-end: var(--unit-md);
   &::part(native) {
     border-bottom-right-radius: var(--radius-lg);
     border-top-right-radius: var(--radius-lg);
+  }
+  &.activeItem {
+    --background: var(--ion-color-main);
+    --color: var(--ion-color-main-contrast);
+    font-weight: 700;
+    ion-icon {
+      color: var(--ion-color-light);
+    }
+  }
+  &:hover {
+    --background: transparent;
+    ion-icon {
+      color: var(--ion-color-main);
+    }
   }
 }
