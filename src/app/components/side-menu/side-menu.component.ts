@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LogoComponent } from '@components/logo/logo.component';
+import { ThemeSwitcherComponent } from '@components/theme-switcher/theme-switcher.component';
 import { IonicModule, MenuController, ModalController } from '@ionic/angular';
 import { PathNames } from '@shared/enums';
 
@@ -10,7 +11,7 @@ import { PathNames } from '@shared/enums';
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, RouterModule, LogoComponent],
+  imports: [IonicModule, CommonModule, RouterModule, LogoComponent, ThemeSwitcherComponent],
 })
 export class SideMenuComponent {
   //Injects
