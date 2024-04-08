@@ -1,3 +1,4 @@
 export const enum StorageItems{
-  darkMode = "isDarkMode",
+  DarkMode = "isDarkMode",
+  Boards = "boardsData"
 }

@@ -21,7 +21,7 @@ export class ThemeEffects {
           this.store$
             .pipe(select(fromSelector.selectDarkMode))
             .subscribe((dark) => {
-              this.storage.set(StorageItems.darkMode, dark);
+              this.storage.set(StorageItems.DarkMode, dark);
               document.body.classList.toggle('dark', dark);
             });
         })
