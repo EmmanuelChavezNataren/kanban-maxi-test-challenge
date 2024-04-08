@@ -1,0 +1,34 @@
+:host {
+  --ion-background-color: var(--ion-content-background);
+  --ion-item-background: transparent;
+  display: contents;
+}
+
+ion-content {
+  --background: var(--ion-content-background);
+}
+
+ion-item {
+  --background-hover-opacity: 1;
+  --background-hover: var(--ion-color-main-contrast);
+  --color-hover: var(--ion-color-main);
+  margin-inline-end: var(--unit-md);
+  &::part(native) {
+    border-bottom-right-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+  }
+  &.activeItem {
+    --background: var(--ion-color-main);
+    --color: var(--ion-color-main-contrast);
+    font-weight: 700;
+    ion-icon {
+      color: var(--ion-color-light);
+    }
+  }
+  &:hover {
+    --background: transparent;
+    ion-icon {
+      color: var(--ion-color-main);
+    }
+  }
+}

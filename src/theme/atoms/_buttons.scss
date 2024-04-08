@@ -1,0 +1,12 @@
+ion-button {
+  --padding-bottom: var(--unit-xxs);
+  --padding-top: var(--unit-xxs);
+  height: var(--btn-cta-height);
+  text-transform: capitalize;
+
+  &:not([fill="clear"]) {
+    ion-icon {
+      color: var(--ion-color-contrast);
+    }
+  }
+}

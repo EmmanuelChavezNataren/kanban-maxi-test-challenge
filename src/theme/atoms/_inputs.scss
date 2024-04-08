@@ -1,0 +1,14 @@
+ion-toggle {
+  --handle-border-radius: 50%;
+  --handle-height: var(--unit-def);
+  --handle-max-height: var(--unit-def);
+  --handle-spacing: var(--unit-xxs);
+  --handle-width: var(--unit-def);
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  &::part(track) {
+    height: var(--unit-XX);
+  }
+}

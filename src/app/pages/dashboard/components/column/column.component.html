@@ -1,0 +1,6 @@
+<ion-list>
+  <ion-list-header>
+    {{ column.title }}
+  </ion-list-header>
+  <app-task *ngFor="let task of column.tasks" [task]="task"></app-task>
+</ion-list>

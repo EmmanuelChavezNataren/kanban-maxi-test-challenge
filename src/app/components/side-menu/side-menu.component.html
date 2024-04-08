@@ -1,0 +1,53 @@
+<!-- LOGO -->
+<app-logo />
+<!-- END LOGO -->
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-list-header>
+      <ion-label color="medium">
+        <h3>
+          <strong>
+            ALL BOARDS ({{ readBoards?.length }})
+          </strong>
+        </h3>
+      </ion-label>
+    </ion-list-header>
+
+    <ion-menu-toggle autoHide="false">
+      <!-- BOARD LIST -->
+      @for (board of readBoards; track board) {
+      <ion-item *ngIf="readBoards?.length" lines="none" detail="false" [routerLink]="['']"
+        [ngClass]="{'activeItem': board === activeBoard}" (click)="selectBoard(board)">
+        <ion-icon aria-hidden="true" slot="start" size="small" name="clipboard-outline" class="mrg-y-8" />
+        <ion-label class="fz-14 mrg-y-8 ion-text-nowrap">{{ board }}</ion-label>
+      </ion-item>
+      }
+
+      <!-- END BOARD LIST -->
+
+      <!-- ADD NEW BOARD -->
+      <ion-item button lines="none" detail="false" (click)="add()">
+        <ion-icon aria-hidden="true" slot="start" name="clipboard-outline" color="tertiary" size="small"
+          class="mrg-y-8" />
+        <ion-label color="tertiary" class="fz-14 mrg-y-8 ion-text-nowrap">
+          <strong>{{ '+ Create New Board' }}</strong>
+        </ion-label>
+      </ion-item>
+      <!-- END ADD NEW BOARD -->
+    </ion-menu-toggle>
+  </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border bg-content ion-padding-bottom ion-padding-horizontal">
+  <!-- SWITCH THEME -->
+  <app-theme-switcher />
+  <!-- END SWITCH THEME -->
+
+  <!-- HIDE SIDE-MENU -->
+  <ion-button (click)="hideSideMenu()" fill="clear" expand="block" color="medium" class="pdd-x-6">
+    <ion-icon slot="start" name="eye-off"></ion-icon>
+    Hide Sidebar
+  </ion-button>
+  <!-- END HIDE SIDE-MENU -->
+</ion-footer>

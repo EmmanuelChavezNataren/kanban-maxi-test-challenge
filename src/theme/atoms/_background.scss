@@ -1,0 +1,8 @@
+.bg-transparent {
+  --background: transparent;
+  background: transparent;
+}
+
+.bg-content {
+  background: var(--ion-content-background);
+}
