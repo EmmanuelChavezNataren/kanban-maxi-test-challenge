@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { UtilsHelper } from '@shared/helpers';
 import { Observable, map } from 'rxjs';
+import { IColumn, ITask } from '../common/models/board.model';
 import { BoardFacade } from '../facades/board.facade';
 
 @Injectable()
@@ -18,14 +19,17 @@ export class BoardProvider {
   }
 
   getBoards(): void {
-    this.#utils.presentLoading().then(() => {
-      this.state.getBoards();
-    });
+    this.#utils.presentLoading();
+    this.state.getBoards();
   }
 
   getBoardColumns(boardName: string): void {
-    this.#utils.presentLoading().then(() => {
-      this.state.getBoardColumns(boardName);
-    });
+    this.#utils.presentLoading();
+    this.state.getBoardColumns(boardName);
+  }
+
+  moveTask(task: ITask, column: IColumn) {
+    this.#utils.presentLoading('Updating data...');
+    this.state.moveTask(task, column);
   }
 }

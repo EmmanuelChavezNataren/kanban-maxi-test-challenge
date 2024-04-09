@@ -3,13 +3,13 @@ import { Store } from '@ngrx/store';
 import { Observable, filter } from 'rxjs';
 
 import { IFacade } from '@shared/contracts';
-import { BoardsData, IColumn } from '../common/models/board.model';
+import { BoardsData, IColumn, ITask } from '../common/models/board.model';
 import * as fromActions from '../store/board.actions';
 import * as fromSelectors from '../store/board.selectors';
 
 @Injectable()
 export class BoardFacade implements IFacade<BoardsData, boolean> {
-  readonly #store = inject(Store);
+  #store = inject(Store);
 
   get isLoading$(): Observable<boolean> {
     return this.#store.select(fromSelectors.selectIsLoading);
@@ -42,5 +42,10 @@ export class BoardFacade implements IFacade<BoardsData, boolean> {
   }
   getBoardColumns(boardName: string): void {
     return this.#store.dispatch(fromActions.loadBoardColumns({ boardName }));
+  }
+  moveTask(task: ITask, column: IColumn): void {
+    return this.#store.dispatch(
+      fromActions.moveTask({ task, column })
+    );
   }
 }

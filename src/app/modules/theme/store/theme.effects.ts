@@ -17,7 +17,6 @@ export class ThemeEffects {
       this.actions$.pipe(
         ofType(fromActions.ThemeActionTypes.TOGGLE_THEME),
         tap((value) => {
-          console.log('tap value ', value);
           this.store$
             .pipe(select(fromSelector.selectDarkMode))
             .subscribe((dark) => {
