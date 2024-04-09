@@ -29,7 +29,6 @@ export class ColumnComponent {
 
   drop(event: CdkDragDrop<ITask[]>, column: IColumn) {
     const readTask = event.item.data as ITask;
-    console.log('readTask ', readTask);
     const task: ITask = { ...readTask };
 
     if (event.previousContainer === event.container) {

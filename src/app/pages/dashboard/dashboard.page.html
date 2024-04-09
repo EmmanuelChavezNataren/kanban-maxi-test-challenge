@@ -3,11 +3,13 @@
 <!-- END MAIN HEADER -->
 
 <ion-content [fullscreen]="true">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="4" *ngFor="let column of (boardColumns$ | async)">
-        <app-column [column]="column"></app-column>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div cdkDropListGroup>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4" *ngFor="let column of (boardColumns$ | async); let i = index;">
+          <app-column [column]="column" [activeBoardIndex]="i" (positionChange)="onPositionChange($event)"></app-column>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
