@@ -2,7 +2,8 @@
   <!-- MENU -->
   <ion-split-pane when="sm" contentId="main-content">
     <ion-menu contentId="main-content">
-      <app-side-menu [readBoards]="readBoards$ | async" [activeBoard]="activeBoard$ | async" />
+      <app-side-menu [readBoards]="readBoards$ | async" [activeBoard]="activeBoard$ | async"
+        (selectedBoard)="onSelectBoard($event)" (addBoard)="onAddBoard()" />
     </ion-menu>
     <ion-router-outlet id="main-content" />
   </ion-split-pane>
