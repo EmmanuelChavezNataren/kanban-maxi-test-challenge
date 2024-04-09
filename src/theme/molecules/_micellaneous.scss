@@ -3,3 +3,10 @@
   --min-height: auto;
   min-height: auto;
 }
+
+.point{
+  width: var(--unit-def);
+  height: var(--unit-def);
+  border-radius: var(--radius-circle);
+  margin-right: var(--unit-s);
+}

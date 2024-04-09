@@ -1,8 +1,10 @@
-<ion-card mode="md">
+<ion-card mode="md" cdkDragHandle>
   <ion-card-header>
     {{ task.title }}
   </ion-card-header>
   <ion-card-content>
-    <!-- Aquí puedes agregar más detalles sobre la tarea -->
+    <ion-label>
+      {{calculateCompleted(task.subtasks)}} of {{task.subtasks.length}} subtask{{task.subtasks.length > 1 ? 's' : ''}}
+    </ion-label>
   </ion-card-content>
 </ion-card>

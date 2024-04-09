@@ -1,6 +1,15 @@
 <ion-list>
   <ion-list-header>
-    {{ column.title }}
+    <span [ngStyle]="{background: getColor()}" class="point"></span>
+    <ion-label color="medium">
+      <strong>
+        {{ column.name | uppercase}} ({{column.tasks.length}})
+      </strong>
+    </ion-label>
   </ion-list-header>
-  <app-task *ngFor="let task of column.tasks" [task]="task"></app-task>
+  <div cdkDropList [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event, column)">
+    @for (task of column.tasks; track task){
+    <app-task cdkDrag [cdkDragData]="task" [task]="task"></app-task>
+    }
+  </div>
 </ion-list>
