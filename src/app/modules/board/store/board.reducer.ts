@@ -64,6 +64,25 @@ export const boardReducer: ActionReducer<State> = createReducer(
     })
   ),
   on(
+    fromActions.moveTask,
+    (state): State => ({
+      ...state,
+      isLoading: true,
+    })
+  ),
+  on(
+    fromActions.moveTaskSuccess,
+    (state, { updatedBoards, updatedColumns }): State => ({
+      ...state,
+      isLoading: false,
+      succeeded: true,
+      hasError: false,
+      errorMessage: null,
+      data: [...updatedBoards],
+      columns: [...updatedColumns],
+    })
+  ),
+  on(
     fromActions.failure,
     (state, { errors }): State => ({
       ...state,

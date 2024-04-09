@@ -6,11 +6,11 @@ import { IonicModule } from '@ionic/angular';
 
 import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MainHeaderComponent } from '@components/headers/main-header/main-header.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
 import { DashboardPage } from './dashboard.page';
-import { CoreBoardModule } from '@modules/board/core-board.module';
 
 const components = [MainHeaderComponent];
 
@@ -20,7 +20,8 @@ const components = [MainHeaderComponent];
     FormsModule,
     IonicModule,
     DashboardPageRoutingModule,
-    components
+    components,
+    DragDropModule,
   ],
   declarations: [DashboardPage, ColumnComponent, TaskComponent],
 })
