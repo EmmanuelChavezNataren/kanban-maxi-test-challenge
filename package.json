@@ -12,6 +12,7 @@
     "lint": "ng lint",
     "postinstall:legacy": "npm install --legacy-peer-deps",
     "sync": "ionic build --configuration=development && npx cap sync",
+    "sync:prod": "ionic build --prod --configuration=production && npx cap sync",
     "serve:dev": "ionic serve --configuration development",
     "serve:prod": "ionic serve --configuration production",
     "debug:apk": "ionic capacitor run android --configuration development -l --external",
@@ -29,6 +30,7 @@
     "@angular/platform-browser": "^17.3.3",
     "@angular/platform-browser-dynamic": "^17.3.3",
     "@angular/router": "^17.3.3",
+    "@angular/service-worker": "^17.3.3",
     "@capacitor/app": "5.0.7",
     "@capacitor/core": "5.7.4",
     "@capacitor/haptics": "5.0.7",
@@ -41,7 +43,7 @@
     "@ngrx/store-devtools": "^17.1.1",
     "ionicons": "^7.3.1",
     "rxjs": "~7.8.1",
-    "tslib": "^2.6.2",
+    "tslib": "^2.3.0",
     "zone.js": "~0.14.4"
   },
   "devDependencies": {
