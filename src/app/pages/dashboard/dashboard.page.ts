@@ -41,4 +41,8 @@ export class DashboardPage implements OnInit, OnDestroy {
     this.activeBoard$ = this.#boardProv.state.activeBoard$;
     this.boardColumns$ = this.#boardProv.state.boardColumns$;
   }
+
+  onPositionChange({ task, column }) {
+    this.#boardProv.moveTask(task, column);
+  }
 }

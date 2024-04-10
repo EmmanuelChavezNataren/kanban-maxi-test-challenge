@@ -6,8 +6,8 @@ import { IonicModule } from '@ionic/angular';
   styleUrls: ['./logo.component.scss'],
   imports: [IonicModule],
   standalone: true,
-  template: `<ion-header class="ion-no-border ion-padding-horizontal">
-    <ion-toolbar class="bg-transparent ion-no-padding">
+  template: `<ion-header class="ion-no-border">
+    <ion-toolbar class="bg-transparent ion-no-padding ion-padding-horizontal">
       <ion-icon slot="start" size="large" [src]="'assets/icon/svg/kanban-3.svg'" />
       <ion-title slot="start" class="ion-no-padding fz-24">Kanban</ion-title>
     </ion-toolbar>

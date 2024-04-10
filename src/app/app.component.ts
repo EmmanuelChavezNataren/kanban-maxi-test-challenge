@@ -63,4 +63,12 @@ export class AppComponent implements OnInit {
 
     this.#boardProv.getBoards();
   }
+
+  onSelectBoard(boardName: string) {
+    this.#boardProv.getBoardColumns(boardName);
+  }
+
+  onAddBoard() {
+
+  }
 }

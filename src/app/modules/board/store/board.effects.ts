@@ -2,7 +2,15 @@ import { Injectable } from '@angular/core';
 import { environment } from '@envs/environment';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { SnackbarHelper, UtilsHelper } from '@shared/helpers';
-import { catchError, exhaustMap, from, map, mergeMap, of, switchMap } from 'rxjs';
+import {
+  catchError,
+  exhaustMap,
+  from,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+} from 'rxjs';
 import { BoardRepository } from '../repositories/board.repository';
 import * as fromActions from './board.actions';
 
@@ -19,6 +27,7 @@ export class BoardEffects {
             switchMap((storedData) => {
               if (storedData?.length) {
                 this.utils.dismissLoading();
+                this.boardRepo.boards = storedData;
                 return of(
                   fromActions.loadBoardsSuccess({
                     boards: storedData,
@@ -28,6 +37,7 @@ export class BoardEffects {
               return this.boardRepo.loadPreloadedBoards().pipe(
                 map((preloadedBoards) => {
                   this.utils.dismissLoading();
+                  this.boardRepo.boards = preloadedBoards;
                   this.boardRepo.saveBoards(preloadedBoards);
                   return fromActions.loadBoardsSuccess({
                     boards: preloadedBoards,
@@ -45,6 +55,7 @@ export class BoardEffects {
         return this.boardRepo.getBoards().pipe(
           map((boards) => {
             this.utils.dismissLoading();
+            this.boardRepo.boards = boards;
             return fromActions.loadBoardsSuccess({ boards });
           }),
           catchError(({ error }: any) => {
@@ -73,6 +84,27 @@ export class BoardEffects {
           })
         );
       })
+    )
+  );
+
+  moveTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.BoardActionTypes.MOVE_TASK),
+      mergeMap(({ task, column }) =>
+        this.boardRepo.moveTask(task, column).pipe(
+          map(({ updatedBoards, updatedColumns }) => {
+            this.utils.dismissLoading();
+            return fromActions.moveTaskSuccess({
+              updatedBoards,
+              updatedColumns,
+            });
+          }),
+          catchError((error) => {
+            this.utils.dismissLoading();
+            return of(fromActions.failure({ errors: error }));
+          })
+        )
+      )
     )
   );
 
