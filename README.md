@@ -141,3 +141,7 @@ Have a bug or an issue with this template? [Open a new issue](https://github.com
 ## Creator
 
 The project was created by and is maintained by **[Emmanuel Chávez](https://www.linkedin.com/in/emmanuel-chavez-nataren-dev/)**
+
+## Demo Test
+
+The project can be viewed as a demo hosted on Firebase in the link: https://kanban-task-management-ecn.web.app/
