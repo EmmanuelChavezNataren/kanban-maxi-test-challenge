@@ -2,15 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@envs/environment';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { SnackbarHelper, UtilsHelper } from '@shared/helpers';
-import {
-  catchError,
-  exhaustMap,
-  from,
-  map,
-  mergeMap,
-  of,
-  switchMap,
-} from 'rxjs';
+import { catchError, exhaustMap, map, mergeMap, of, switchMap } from 'rxjs';
 import { BoardRepository } from '../repositories/board.repository';
 import * as fromActions from './board.actions';
 
@@ -23,7 +15,7 @@ export class BoardEffects {
       ofType(fromActions.BoardActionTypes.LOAD_BOARDS),
       exhaustMap(() => {
         if (environment.useLocalStorage) {
-          return from(this.boardRepo.getStoredBoards()).pipe(
+          return this.boardRepo.getStoredBoards().pipe(
             switchMap((storedData) => {
               if (storedData?.length) {
                 this.utils.dismissLoading();
@@ -71,8 +63,8 @@ export class BoardEffects {
   loadBoardColumns$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.BoardActionTypes.LOAD_BOARD_COLUMNS),
-      mergeMap(({ boardName }) => {
-        return this.boardRepo.getBoardColumns(boardName).pipe(
+      mergeMap(({ id }) => {
+        return this.boardRepo.getBoardColumns(id).pipe(
           map((columns) => {
             this.utils.dismissLoading();
             return fromActions.loadBoardColumnsSuccess({ columns });
@@ -92,12 +84,9 @@ export class BoardEffects {
       ofType(fromActions.BoardActionTypes.MOVE_TASK),
       mergeMap(({ task, column }) =>
         this.boardRepo.moveTask(task, column).pipe(
-          map(({ updatedBoards, updatedColumns }) => {
+          map(({ updatedBoards }) => {
             this.utils.dismissLoading();
-            return fromActions.moveTaskSuccess({
-              updatedBoards,
-              updatedColumns,
-            });
+            return fromActions.moveTaskSuccess({ updatedBoards });
           }),
           catchError((error) => {
             this.utils.dismissLoading();

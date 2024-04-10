@@ -24,11 +24,7 @@ export const selectErrorMessage = createSelector(
 );
 /** Data **/
 export const selectBoards = createSelector(selectState, ({ data }) => data);
-export const selectColumns = createSelector(
-  selectState,
-  ({ columns }) => columns
-);
 export const selectActiveBoard = createSelector(
   selectState,
-  ({ activeBoardName }) => activeBoardName
+  ({ activeBoard }) => activeBoard
 );

@@ -8,7 +8,7 @@
     </ion-label>
   </ion-list-header>
   <div cdkDropList [cdkDropListData]="column.tasks" (cdkDropListDropped)="drop($event, column)">
-    @for (task of column.tasks; track task){
+    @for (task of column.tasks; track task.id){
     <app-task cdkDrag [cdkDragData]="task" [task]="task"></app-task>
     }
   </div>

@@ -3,7 +3,7 @@ import { Capacitor } from '@capacitor/core';
 import { Keyboard } from '@capacitor/keyboard';
 import { StatusBar } from '@capacitor/status-bar';
 import { MenuController, Platform } from '@ionic/angular';
-import { BoardProvider } from '@modules/board';
+import { BoardProvider, IBoard, IReadBoard } from '@modules/board';
 import { ThemeProvider } from '@modules/theme';
 import { Observable } from 'rxjs';
 @Component({
@@ -18,8 +18,8 @@ export class AppComponent implements OnInit {
   #themeProv = inject(ThemeProvider);
   #boardProv = inject(BoardProvider);
 
-  readBoards$: Observable<string[]>;
-  activeBoard$: Observable<string>;
+  readBoards$: Observable<IReadBoard[]>;
+  activeBoard$: Observable<IBoard>;
 
   constructor() {
     this.initializeApp();
@@ -64,11 +64,9 @@ export class AppComponent implements OnInit {
     this.#boardProv.getBoards();
   }
 
-  onSelectBoard(boardName: string) {
-    this.#boardProv.getBoardColumns(boardName);
+  onSelectBoard(boardId: string) {
+    this.#boardProv.getBoardColumns(boardId);
   }
 
-  onAddBoard() {
-
-  }
+  onAddBoard() {}
 }
