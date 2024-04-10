@@ -1,12 +1,12 @@
 <!-- MAIN HEADER -->
-<app-main-header [title]="activeBoard$ | async" [hasActionable]="true" txtActionable="Add New Task" />
+<app-main-header [title]="(activeBoard$ | async)?.name" [hasActionable]="true" txtActionable="Add New Task" />
 <!-- END MAIN HEADER -->
 
 <ion-content [fullscreen]="true">
   <div cdkDropListGroup>
     <ion-grid>
       <ion-row>
-        <ion-col size="4" *ngFor="let column of (boardColumns$ | async); let i = index;">
+        <ion-col size="4" *ngFor="let column of (activeBoard$ | async)?.columns; let i = index;">
           <app-column [column]="column" [activeBoardIndex]="i" (positionChange)="onPositionChange($event)"></app-column>
         </ion-col>
       </ion-row>

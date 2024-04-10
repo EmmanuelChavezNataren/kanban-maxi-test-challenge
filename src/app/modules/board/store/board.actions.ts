@@ -23,7 +23,7 @@ export const loadBoardsSuccess = createAction(
 
 export const loadBoardColumns = createAction(
   BoardActionTypes.LOAD_BOARD_COLUMNS,
-  props<{ boardName: string }>()
+  props<{ boardId: string }>()
 );
 export const loadBoardColumnsSuccess = createAction(
   BoardActionTypes.LOAD_BOARD_COLUMNS_SUCCESS,
@@ -36,7 +36,7 @@ export const moveTask = createAction(
 );
 export const moveTaskSuccess = createAction(
   BoardActionTypes.MOVE_TASK_SUCCESS,
-  props<{ updatedBoards: BoardsData; updatedColumns: IColumn[] }>()
+  props<{ updatedBoards: BoardsData }>()
 );
 
 /** Global Actions**/

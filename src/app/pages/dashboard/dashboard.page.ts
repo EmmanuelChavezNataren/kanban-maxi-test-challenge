@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MenuController } from '@ionic/angular';
-import { BoardProvider, IColumn } from '@modules/board';
+import { BoardProvider, IBoard } from '@modules/board';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -15,8 +15,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   #subs: Subscription = new Subscription();
 
-  activeBoard$: Observable<string>;
-  boardColumns$: Observable<IColumn[]>;
+  activeBoard$: Observable<IBoard>;
 
   constructor() {}
 
@@ -39,7 +38,6 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   subscribeData(): void {
     this.activeBoard$ = this.#boardProv.state.activeBoard$;
-    this.boardColumns$ = this.#boardProv.state.boardColumns$;
   }
 
   onPositionChange({ task, column }) {

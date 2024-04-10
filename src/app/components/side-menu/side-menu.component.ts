@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { LogoComponent } from '@components/logo/logo.component';
 import { ThemeSwitcherComponent } from '@components/theme-switcher/theme-switcher.component';
 import { IonicModule, MenuController } from '@ionic/angular';
+import { IBoard, IReadBoard } from '@modules/board';
 
 @Component({
   selector: 'app-side-menu',
@@ -19,8 +20,8 @@ import { IonicModule, MenuController } from '@ionic/angular';
   ],
 })
 export class SideMenuComponent {
-  @Input() readBoards!: string[];
-  @Input() activeBoard!: string;
+  @Input() readBoards!: IReadBoard[];
+  @Input() activeBoard!: IBoard;
 
   @Output() addBoard = new EventEmitter<void>();
   @Output() selectedBoard = new EventEmitter<string>();
@@ -40,7 +41,7 @@ export class SideMenuComponent {
     this.addBoard.emit();
   }
 
-  selectBoard(board: string) {
-    this.selectedBoard.emit(board);
+  selectBoard(boardId: string) {
+    this.selectedBoard.emit(boardId);
   }
 }

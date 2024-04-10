@@ -16,11 +16,11 @@
 
     <ion-menu-toggle autoHide="false">
       <!-- BOARD LIST -->
-      @for (board of readBoards; track board) {
+      @for (board of readBoards; track board.id) {
       <ion-item *ngIf="readBoards?.length" lines="none" detail="false" [routerLink]="['']"
-        [ngClass]="{'activeItem': board === activeBoard}" (click)="selectBoard(board)">
+        [ngClass]="{'activeItem': board.id === activeBoard.id}" (click)="selectBoard(board.id)">
         <ion-icon aria-hidden="true" slot="start" size="small" name="clipboard-outline" class="mrg-y-8" />
-        <ion-label class="fz-14 mrg-y-8 ion-text-nowrap">{{ board }}</ion-label>
+        <ion-label class="fz-14 mrg-y-8 ion-text-nowrap">{{ board.name }}</ion-label>
       </ion-item>
       }
 
