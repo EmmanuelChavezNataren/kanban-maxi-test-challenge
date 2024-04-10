@@ -3,7 +3,12 @@ import { Store } from '@ngrx/store';
 import { Observable, filter } from 'rxjs';
 
 import { IFacade } from '@shared/contracts';
-import { BoardsData, IColumn, ITask } from '../common/models/board.model';
+import {
+  BoardsData,
+  IBoard,
+  IColumn,
+  ITask,
+} from '../common/models/board.model';
 import * as fromActions from '../store/board.actions';
 import * as fromSelectors from '../store/board.selectors';
 
@@ -28,24 +33,17 @@ export class BoardFacade implements IFacade<BoardsData, boolean> {
       .select(fromSelectors.selectBoards)
       .pipe(filter((x) => !!x));
   }
-  get boardColumns$(): Observable<IColumn[]> {
-    return this.#store
-      .select(fromSelectors.selectColumns)
-      .pipe(filter((x) => !!x));
-  }
-  get activeBoard$(): Observable<string> {
+  get activeBoard$(): Observable<IBoard> {
     return this.#store.select(fromSelectors.selectActiveBoard);
   }
 
   getBoards(): void {
     return this.#store.dispatch(fromActions.loadBoards());
   }
-  getBoardColumns(boardName: string): void {
-    return this.#store.dispatch(fromActions.loadBoardColumns({ boardName }));
+  getBoardColumns(boardId: string): void {
+    return this.#store.dispatch(fromActions.loadBoardColumns({ boardId }));
   }
   moveTask(task: ITask, column: IColumn): void {
-    return this.#store.dispatch(
-      fromActions.moveTask({ task, column })
-    );
+    return this.#store.dispatch(fromActions.moveTask({ task, column }));
   }
 }

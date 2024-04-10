@@ -1,13 +1,12 @@
 import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import { IState } from '@shared/contracts';
-import { BoardsData, IColumn } from '../common/models/board.model';
+import { BoardsData, IBoard } from '../common/models/board.model';
 import * as fromActions from './board.actions';
 
 export const featureKey = 'board';
 
 export interface State extends IState<BoardsData> {
-  activeBoardName: string;
-  columns: IColumn[];
+  activeBoard: IBoard;
 }
 
 export const initialState: State = {
@@ -16,8 +15,7 @@ export const initialState: State = {
   data: [],
   isLoading: false,
   succeeded: false,
-  activeBoardName: '',
-  columns: [],
+  activeBoard: null,
 };
 
 export const boardReducer: ActionReducer<State> = createReducer(
@@ -27,16 +25,18 @@ export const boardReducer: ActionReducer<State> = createReducer(
     (state): State => ({
       ...state,
       isLoading: true,
-      activeBoardName: '',
-      columns: [],
+      activeBoard: null,
     })
   ),
   on(
     fromActions.loadBoardColumns,
-    (state, { boardName }): State => ({
+    (state, { boardId }): State => ({
       ...state,
       isLoading: true,
-      activeBoardName: boardName,
+      activeBoard: {
+        ...state.activeBoard,
+        id: boardId,
+      },
     })
   ),
   on(
@@ -48,8 +48,7 @@ export const boardReducer: ActionReducer<State> = createReducer(
       hasError: false,
       errorMessage: null,
       data: [...boards],
-      activeBoardName: boards[0]?.name,
-      columns: boards[0]?.columns,
+      activeBoard: boards[0],
     })
   ),
   on(
@@ -60,7 +59,10 @@ export const boardReducer: ActionReducer<State> = createReducer(
       succeeded: true,
       hasError: false,
       errorMessage: null,
-      columns: [...columns],
+      activeBoard: {
+        ...state.activeBoard,
+        columns: [...columns],
+      },
     })
   ),
   on(
@@ -72,14 +74,18 @@ export const boardReducer: ActionReducer<State> = createReducer(
   ),
   on(
     fromActions.moveTaskSuccess,
-    (state, { updatedBoards, updatedColumns }): State => ({
+    (state, { updatedBoards }): State => ({
       ...state,
       isLoading: false,
       succeeded: true,
       hasError: false,
       errorMessage: null,
       data: [...updatedBoards],
-      columns: [...updatedColumns],
+      activeBoard: {
+        ...(updatedBoards.find(
+          (board: IBoard) => board.id === state.activeBoard.id
+        ) ?? state.activeBoard),
+      },
     })
   ),
   on(

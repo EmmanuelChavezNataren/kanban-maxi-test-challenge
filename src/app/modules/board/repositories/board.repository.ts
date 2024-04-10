@@ -4,6 +4,7 @@ import { IRepository } from '@shared/contracts';
 import { StorageItems } from '@shared/enums';
 import { StorageHelper } from '@shared/helpers';
 import { Observable, map, of } from 'rxjs';
+import { BoardAdapter } from '../adapters/board.adapter';
 import {
   BoardsData,
   IBoard,
@@ -19,6 +20,7 @@ export class BoardRepository extends IRepository {
 
   //Injects
   readonly #storage = inject(StorageHelper);
+  readonly #adapter = inject(BoardAdapter);
 
   boards: BoardsData;
 
@@ -27,22 +29,50 @@ export class BoardRepository extends IRepository {
   }
 
   getBoards(): Observable<BoardsData> {
-    return this.httpGet<BoardsData>(this.#boardsUrl);
+    return this.httpGet<BoardsData>(this.#boardsUrl).pipe(
+      map((boards) => this.#adapter.addUniqueIdToBoard(boards))
+    );
   }
 
-  getBoardColumns(boardName: string): Observable<IColumn[]> {
-    const board = [...this.boards].find((b) => b.name === boardName);
+  getBoardColumns(boardId: string): Observable<IColumn[]> {
+    const board = [...this.boards].find((b) => b.id === boardId);
     return of(board ? board.columns : []);
   }
 
-  async getStoredBoards(): Promise<BoardsData> {
-    return await this.#storage.getObject<BoardsData>(StorageItems.Boards);
+  getStoredBoards(): Observable<BoardsData> {
+    return new Observable<BoardsData>((observer) => {
+      this.#storage
+        .getObject<BoardsData>(StorageItems.Boards)
+        .then((boards) => {
+          if (boards?.length) {
+            for (let board of boards) {
+              if (!('id' in board)) {
+                const boardsAdap = this.#adapter.addUniqueIdToBoard(boards);
+                this.saveBoards(boardsAdap);
+                observer.next(boardsAdap);
+                observer.complete();
+                return;
+              }
+            }
+          }
+          observer.next(boards);
+          observer.complete();
+        })
+        .catch((error) => observer.error(error));
+    });
   }
 
   loadPreloadedBoards(): Observable<BoardsData> {
-    return this.http
-      .get<{ boards: BoardsData }>(this.#localBoardsUrl)
-      .pipe(map((response) => response.boards));
+    return this.http.get<{ boards: BoardsData }>(this.#localBoardsUrl).pipe(
+      map((response) => {
+        for (let board of response.boards) {
+          if (!('id' in board)) {
+            return this.#adapter.addUniqueIdToBoard(response.boards);
+          }
+        }
+        return response.boards;
+      })
+    );
   }
 
   saveBoards(boardsData: BoardsData): void {
@@ -50,54 +80,44 @@ export class BoardRepository extends IRepository {
   }
 
   moveTask(selectedTask: ITask, selectedColumn: IColumn) {
-    let boardsCopy = [...this.boards];
-    const boardFromIndex = [...boardsCopy].findIndex((board: IBoard) =>
-      board.columns.some((column: IColumn) =>
-        column.tasks.some(
-          (task: ITask) => JSON.stringify(task) === JSON.stringify(selectedTask)
-        )
-      )
-    );
-
-    // Find the column that contains the task
-    const columnFromIndex = [...boardsCopy][boardFromIndex].columns.findIndex(
-      (column) =>
-        column.tasks.some(
-          (task) => JSON.stringify(task) === JSON.stringify(selectedTask)
-        )
-    );
-    // Find the index of the task in the column
-    const taskFromIndex = [...boardsCopy][boardFromIndex].columns[
-      columnFromIndex
-    ].tasks.findIndex(
-      (task) => JSON.stringify(task) === JSON.stringify(selectedTask)
-    );
     // Copy of the task
     const taskCopy: ITask = {
       ...selectedTask,
-      status: selectedColumn.name,
+      status: selectedColumn.id,
     };
+
     // Remove the task from the original column
-    let taskFrom = [
-      ...boardsCopy[boardFromIndex].columns[columnFromIndex].tasks,
-    ];
-    taskFrom.splice(taskFromIndex, 1);
-    boardsCopy[boardFromIndex].columns[columnFromIndex].tasks;
+    const updateBoards: BoardsData = this.boards.map((board: IBoard) => {
+      return {
+        ...board,
+        columns: board.columns.map((column: IColumn) => {
+          return {
+            ...column,
+            tasks: [...column.tasks].filter((task: ITask) => {
+              return task.id !== selectedTask.id;
+            }),
+          };
+        }),
+      };
+    });
 
     // Add the task to the new column
-    let newColumn = boardsCopy[boardFromIndex].columns.find(
-      (column) => JSON.stringify(column) === JSON.stringify(selectedColumn)
-    );
-    let tasksTo = [...newColumn.tasks];
-    tasksTo.push(taskCopy);
-    newColumn.tasks = [...tasksTo];
+    const newBoards: BoardsData = updateBoards.map((board: IBoard) => {
+      return {
+        ...board,
+        columns: board.columns.map((column: IColumn) => {
+          if (column.id === selectedColumn.id) {
+            column.tasks.push(taskCopy);
+          }
+          return column;
+        }),
+      };
+    });
 
     //updating data in storage
-    this.boards = [...boardsCopy];
-    this.saveBoards([...boardsCopy]);
+    this.saveBoards(newBoards);
     return of({
-      updatedBoards: [...boardsCopy],
-      updatedColumns: [...boardsCopy[boardFromIndex].columns],
+      updatedBoards: newBoards,
     });
   }
 }

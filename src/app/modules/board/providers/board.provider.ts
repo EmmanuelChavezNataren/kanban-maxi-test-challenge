@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { UtilsHelper } from '@shared/helpers';
 import { Observable, map } from 'rxjs';
-import { IColumn, ITask } from '../common/models/board.model';
+import { IColumn, IReadBoard, ITask } from '../common/models/board.model';
 import { BoardFacade } from '../facades/board.facade';
 
 @Injectable()
@@ -12,9 +12,11 @@ export class BoardProvider {
   get state(): BoardFacade {
     return this.#facade;
   }
-  get readBoard$(): Observable<string[]> {
+  get readBoard$(): Observable<IReadBoard[]> {
     return this.state.data$.pipe(
-      map((boards) => boards.map((board) => board.name))
+      map((boards) =>
+        boards.map((board): IReadBoard => ({ id: board.id, name: board.name }))
+      )
     );
   }
 
