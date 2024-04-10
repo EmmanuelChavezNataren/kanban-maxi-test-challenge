@@ -14,7 +14,7 @@ This project requires NodeJS (version .13.0 or later) and NPM. Node and NPM are 
 
 ```sh
 $ npm -v && node -v
-10.2.5
+10.5.1
 v20.9.0
 ```
 
@@ -35,12 +35,12 @@ These are some project dependencies and their versions to consider.
 
   | **Library/Plugin**  | **Version** |
   | ------------------- | ----------- |
-  | **_Ionic_**         | ^7.0.0      |
-  | **_Angular_**       | ^17.0.2     |
+  | **_Ionic_**         | ^7.8.3      |
+  | **_Angular_**       | ^17.3.3     |
   | **_Capacitor_**     | 5.7.4       |
   | **_NgRx_**          | ^17.1.1     |
-  | **_rxjs_**          | ^7.8.0      |
-  | **_typescript_**    | ~5.2.2      |
+  | **_rxjs_**          | ^7.8.1      |
+  | **_typescript_**    | ~5.4.4      |
 
 ## Project Structure
 
