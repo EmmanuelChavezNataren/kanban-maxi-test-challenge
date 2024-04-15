@@ -1,16 +1,15 @@
 .dark-mode {
   align-content: center;
   background: var(--ion-color-grey-light);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-xxs);
   color: var(--ion-color-grey-light-contrast);
   display: grid;
   font-size: var(--font-size-xlg);
   height: var(--input-height);
   justify-content: space-around;
-  margin: var(--unit-s) auto;
+  margin: var(--unit-s) var(--unit-md);
   ion-icon {
     font-size: var(--icon-lg);
     margin: var(--unit-s) var(--unit-X);
-
   }
 }
