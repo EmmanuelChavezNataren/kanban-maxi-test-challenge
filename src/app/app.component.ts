@@ -2,9 +2,15 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { Keyboard } from '@capacitor/keyboard';
 import { StatusBar } from '@capacitor/status-bar';
-import { MenuController, Platform } from '@ionic/angular';
-import { BoardProvider, IBoard, IReadBoard } from '@modules/board';
+import { MenuController, ModalController, Platform } from '@ionic/angular';
+import {
+  BoardProvider,
+  DefaultBoard,
+  IBoard,
+  IReadBoard,
+} from '@modules/board';
 import { ThemeProvider } from '@modules/theme';
+import { BoardModalComponent } from '@pages/dashboard/components/modals/board-modal/board-modal.component';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-root',
@@ -12,15 +18,17 @@ import { Observable } from 'rxjs';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  //Injects
-  #menu = inject(MenuController);
-  #platform = inject(Platform);
-  #themeProv = inject(ThemeProvider);
-  #boardProv = inject(BoardProvider);
-
   readBoards$: Observable<IReadBoard[]>;
   activeBoard$: Observable<IBoard>;
 
+  canShowSideMenuBtn: boolean = false;
+
+  //Injects
+  #menuCtrl = inject(MenuController);
+  #platform = inject(Platform);
+  #themeProv = inject(ThemeProvider);
+  #boardProv = inject(BoardProvider);
+  #modalCtrl = inject(ModalController);
   constructor() {
     this.initializeApp();
   }
@@ -37,6 +45,33 @@ export class AppComponent implements OnInit {
    * UI Events
    */
 
+  onSelectBoard(boardId: string) {
+    this.#boardProv.getBoardColumns(boardId);
+  }
+
+  async onAddBoard() {
+    const boardInit: IBoard = { ...DefaultBoard };
+    const modal = await this.#modalCtrl.create({
+      component: BoardModalComponent,
+      mode: 'ios',
+      componentProps: { data: boardInit },
+    });
+    modal.present();
+    modal.onDidDismiss().then(({ data }) => {
+      if (data) {
+        console.log('Board Data ', data);
+      }
+    });
+  }
+
+  onHideSideMenu(isHidden: boolean) {
+    if (!isHidden) {
+      this.#menuCtrl.enable(true, 'first-menu');
+      this.#menuCtrl.open('first-menu');
+    }
+    this.canShowSideMenuBtn = !this.canShowSideMenuBtn;
+  }
+
   private initializeApp() {
     if (Capacitor.isNativePlatform()) {
       StatusBar.setBackgroundColor({ color: 'var(--ion-toolbar-background)' });
@@ -52,9 +87,10 @@ export class AppComponent implements OnInit {
     const isAuthtenticated = true;
     /* !!(await this.#storageHelper.get('authToken')); */
     if (isAuthtenticated) {
-      this.#menu.enable(true);
+      this.#menuCtrl.enable(true);
+      return;
     }
-    this.#menu.enable(false);
+    this.#menuCtrl.enable(false);
   }
 
   private initBoards() {
@@ -63,10 +99,4 @@ export class AppComponent implements OnInit {
 
     this.#boardProv.getBoards();
   }
-
-  onSelectBoard(boardId: string) {
-    this.#boardProv.getBoardColumns(boardId);
-  }
-
-  onAddBoard() {}
 }
