@@ -1,0 +1,23 @@
+@media only screen and (min-width: 576px) and (min-height: 600px) {
+  ion-modal.custom {
+    --backdrop-opacity:0.6;
+    --height: 70%;
+    --ion-safe-area-bottom: 0px;
+    --ion-safe-area-left: 0px;
+    --ion-safe-area-right: 0px;
+    --ion-safe-area-top: 0px;
+    --width: 50%;
+  }
+}
+
+@media only screen and (min-width: 992px) and (min-height: 600px) {
+  ion-modal.custom {
+    --width: 45%;
+  }
+}
+
+@media only screen and (min-width: 1200px) and (min-height: 600px) {
+  ion-modal.custom {
+    --width: 40%;
+  }
+}

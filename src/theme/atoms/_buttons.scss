@@ -10,3 +10,38 @@ ion-button {
     }
   }
 }
+
+ion-footer {
+  &.footer-actions {
+    background: var(--ion-color-content);
+    ion-toolbar {
+      border-top-left-radius: var(--radius-md);
+      border-top-right-radius: var(--radius-md);
+      box-shadow: 0px 0px 4px rgb(0 0 0 / 15%);
+      ion-button {
+        margin: var(--unit-md) var(--unit-s);
+        width: auto;
+      }
+    }
+    &::before {
+      background-image: none !important;
+    }
+
+    &-no-box {
+      background: var(--ion-color-content);
+      ion-toolbar {
+        --background: transparent;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        box-shadow: none;
+        ion-button {
+          margin: var(--unit-md) var(--unit-s);
+          width: auto;
+        }
+      }
+      &::before {
+        background-image: none !important;
+      }
+    }
+  }
+}
