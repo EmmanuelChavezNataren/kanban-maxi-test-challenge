@@ -1,0 +1,38 @@
+ion-toast {
+  --background: var(--ion-color-info-text);
+  --border-radius: var(--radius-xs);
+  --button-color: var(--ion-color-primary-contrast);
+  --color: var(--ion-color-primary-contrast);
+  --end: var(--unit-md);
+  --max-width: 600px;
+  --min-height: 56px;
+  --start: var(--unit-md);
+  margin-top: var(--unit-md);
+  &::part(container) {
+    padding: 0;
+  }
+  &.success {
+    --background: var(--ion-color-success);
+  }
+  &.error {
+    --background: var(--ion-color-danger);
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  ion-toast {
+    --start: 40%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  ion-toast {
+    --start: 50%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  ion-toast {
+    --start: 60%;
+  }
+}
