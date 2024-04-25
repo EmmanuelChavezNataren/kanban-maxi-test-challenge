@@ -1,0 +1,34 @@
+<!-- SCREEN HEADER -->
+<app-screen-header [title]="isEdit ? 'Edit Board' : 'Add New Board'" iconBtn="close-circle-outline" [hasBack]="false"
+  [hasBackgroundToolbar]="false" />
+<!-- END SCREEN HEADER -->
+
+<ion-content class="ion-padding-horizontal pdd-y-24">
+  <ion-grid fixed class="ion-no-padding">
+    <ion-row>
+      <ion-col>
+        <!-- BOARD NAME -->
+        <ion-input mode="md" [formControl]="name" fill="outline" shape="round" label="Board Name"
+          labelPlacement="stacked" placeholder="e.g Employee Training" class="custom" minlength="3"></ion-input>
+        <!-- END BOARD NAME -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer mode="md" class="ion-no-border footer-actions-no-box ion-padding-horizontal">
+  <ion-toolbar>
+    <ion-buttons class="display-grid">
+      <!-- ADD COLUMN -->
+      <ion-button mode="md" shape="round" fill="solid" expand="block" color="light" [disabled]="true"
+        (click)="addColumn()">+ Add New Column</ion-button>
+      <!-- END ADD COLUMN -->
+
+      <!-- CREATE BOARD -->
+      <ion-button mode="md" shape="round" fill="solid" expand="block" color="main" [disabled]="name.invalid"
+        (click)="onSaveBoard()">{{isEdit ? 'Save Changes' : 'Create New Board'}} </ion-button>
+      <!-- END CREATE BOARD -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
