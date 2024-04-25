@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://kanban-task-management-ecn.web.app',
-  useLocalStorage: true
+  apiUrl: 'http://localhost:8100',
+  useLocalStorage: true,
 };

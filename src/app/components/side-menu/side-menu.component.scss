@@ -12,7 +12,10 @@ ion-item {
   --background-hover-opacity: 1;
   --background-hover: var(--ion-color-main-contrast);
   --color-hover: var(--ion-color-main);
+  font-weight: 700;
+  margin-bottom: var(--unit-xxs);
   margin-inline-end: var(--unit-md);
+  margin-top: var(--unit-xxs);
   &::part(native) {
     border-bottom-right-radius: var(--radius-lg);
     border-top-right-radius: var(--radius-lg);
@@ -20,10 +23,13 @@ ion-item {
   &.activeItem {
     --background: var(--ion-color-main);
     --color: var(--ion-color-main-contrast);
-    font-weight: 700;
     ion-icon {
       color: var(--ion-color-light);
     }
+  }
+  &.hoverLight{
+    --background-hover-opacity: .10;
+    --background-hover: var(--ion-color-main);
   }
   &:hover {
     --background: transparent;

@@ -13,12 +13,20 @@ import { Subscription } from 'rxjs';
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class ThemeSwitcherComponent {
-  #themeProv = inject(ThemeProvider);
-  #subs: Subscription = new Subscription();
-
   darkMode: boolean;
 
+  #subs: Subscription = new Subscription();
+  //Injects
+  #themeProv = inject(ThemeProvider);
   constructor() {
+    this.subscribeData();
+  }
+
+  /**
+   * UI Events
+   */
+
+  subscribeData() {
     this.#subs.add(
       this.#themeProv.state.isDarkMode$.subscribe((dark) => {
         this.darkMode = dark;
@@ -26,10 +34,6 @@ export class ThemeSwitcherComponent {
       })
     );
   }
-
-  /**
-   * UI Events
-   */
 
   toggleTheme() {
     this.#themeProv.toggleTheme();

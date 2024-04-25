@@ -32,7 +32,7 @@ const components = [SideMenuComponent, MainHeaderComponent];
     StoreModule.forRoot({ theme: themeReducer }),
     EffectsModule.forRoot([ThemeEffects]),
     StoreDevtoolsModule.instrument({
-      maxAge: 25,
+      maxAge: 15,
       logOnly: environment.production,
     }),
     CoreBoardModule,
@@ -42,7 +42,7 @@ const components = [SideMenuComponent, MainHeaderComponent];
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    }),
+    })
   ],
   providers: [
     {

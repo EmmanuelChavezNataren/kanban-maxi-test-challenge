@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, filter } from 'rxjs';
 
+import { Actions, ofType } from '@ngrx/effects';
 import { IFacade } from '@shared/contracts';
 import {
   BoardsData,
@@ -15,6 +16,7 @@ import * as fromSelectors from '../store/board.selectors';
 @Injectable()
 export class BoardFacade implements IFacade<BoardsData, boolean> {
   #store = inject(Store);
+  updates$ = inject(Actions);
 
   get isLoading$(): Observable<boolean> {
     return this.#store.select(fromSelectors.selectIsLoading);
@@ -36,6 +38,12 @@ export class BoardFacade implements IFacade<BoardsData, boolean> {
   get activeBoard$(): Observable<IBoard> {
     return this.#store.select(fromSelectors.selectActiveBoard);
   }
+  get onCreateBoardSuccess$(): Observable<IBoard> {
+    return this.updates$.pipe(ofType(fromActions.createBoardSuccess));
+  }
+  get onUpdateBoardSuccess$(): Observable<IBoard> {
+    return this.updates$.pipe(ofType(fromActions.updateBoardSuccess));
+  }
 
   getBoards(): void {
     return this.#store.dispatch(fromActions.loadBoards());
@@ -45,5 +53,11 @@ export class BoardFacade implements IFacade<BoardsData, boolean> {
   }
   moveTask(task: ITask, column: IColumn): void {
     return this.#store.dispatch(fromActions.moveTask({ task, column }));
+  }
+  createBoard(board: IBoard): void {
+    return this.#store.dispatch(fromActions.createBoard({ board }));
+  }
+  updateBoard(board: IBoard): void {
+    return this.#store.dispatch(fromActions.createBoard({ board }));
   }
 }

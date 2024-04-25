@@ -1,11 +1,19 @@
 <ion-app>
   <!-- MENU -->
   <ion-split-pane when="sm" contentId="main-content">
-    <ion-menu contentId="main-content">
+    <ion-menu menuId="first-menu" contentId="main-content">
       <app-side-menu [readBoards]="readBoards$ | async" [activeBoard]="activeBoard$ | async"
-        (selectedBoard)="onSelectBoard($event)" (addBoard)="onAddBoard()" />
+        (selectedBoard)="onSelectBoard($event)" (addBoard)="onAddBoard()" (hideSideMenu)="onHideSideMenu($event)" />
     </ion-menu>
     <ion-router-outlet id="main-content" />
   </ion-split-pane>
   <!-- END MENU -->
+
+  <!-- SHOW SIDE MENU -->
+  <ion-fab *ngIf="canShowSideMenuBtn" vertical="bottom" horizontal="start">
+    <ion-fab-button size="small" color="main" (click)="onHideSideMenu(false)" class="ion-no-margin mrg-y-8">
+      <ion-icon size="small" name="eye"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <!-- END SHOW SIDE MENU -->
 </ion-app>
