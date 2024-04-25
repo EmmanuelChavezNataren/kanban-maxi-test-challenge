@@ -14,16 +14,14 @@ import {
 
 @Injectable()
 export class BoardRepository extends IRepository {
+  boards: BoardsData;
+
   //Urls
   readonly #localBoardsUrl = `${environment.apiUrl}/assets/mocks/data.json`;
   readonly #boardsUrl = `${environment.apiUrl}/v1/boards`;
-
   //Injects
   readonly #storage = inject(StorageHelper);
   readonly #adapter = inject(BoardAdapter);
-
-  boards: BoardsData;
-
   constructor() {
     super();
   }
@@ -119,5 +117,24 @@ export class BoardRepository extends IRepository {
     return of({
       updatedBoards: newBoards,
     });
+  }
+
+  createBoard(board: IBoard): Observable<IBoard> {
+    return new Observable<IBoard>((observer) => {
+      this.#storage
+        .getObject<BoardsData>(StorageItems.Boards)
+        .then((boards) => {
+          const newBoards: BoardsData = [...boards, board];
+          this.saveBoards(newBoards);
+          observer.next(board);
+          observer.complete();
+        })
+        .catch((error) => observer.error(error));
+    });
+  }
+
+  updateBoard(board: IBoard): Observable<IBoard> {
+    const params = this.fetchParams(board);
+    return this.httpPost<IBoard>(`${this.#boardsUrl}/${board.id}`, params);
   }
 }

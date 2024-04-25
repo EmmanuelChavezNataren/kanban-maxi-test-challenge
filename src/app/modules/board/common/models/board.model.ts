@@ -30,3 +30,4 @@ export interface IReadBoard {
 }
 
 export type BoardsData = IBoard[];
+export const DefaultBoard: IBoard = { id: '', name: '', columns: [] };

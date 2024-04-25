@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import { BoardProvider, IBoard } from '@modules/board';
 import { Observable, Subscription } from 'rxjs';
 
@@ -9,14 +9,13 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit, OnDestroy {
-  //Injects
-  #menu = inject(MenuController);
-  #boardProv = inject(BoardProvider);
-
-  #subs: Subscription = new Subscription();
-
   activeBoard$: Observable<IBoard>;
 
+  #subs: Subscription = new Subscription();
+  //Injects
+  #menuCtrl = inject(MenuController);
+  #boardProv = inject(BoardProvider);
+  #modalCtrl = inject(ModalController);
   constructor() {}
 
   /**
@@ -24,7 +23,7 @@ export class DashboardPage implements OnInit, OnDestroy {
    */
 
   ngOnInit() {
-    this.#menu.enable(true);
+    this.#menuCtrl.enable(true);
     this.subscribeData();
   }
 
@@ -41,6 +40,6 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   onPositionChange({ task, column }) {
-    this.#boardProv.moveTask(task, column);
+    this.#boardProv.state.moveTask(task, column);
   }
 }

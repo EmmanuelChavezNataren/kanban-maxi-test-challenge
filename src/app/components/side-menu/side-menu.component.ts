@@ -5,6 +5,8 @@ import { LogoComponent } from '@components/logo/logo.component';
 import { ThemeSwitcherComponent } from '@components/theme-switcher/theme-switcher.component';
 import { IonicModule, MenuController } from '@ionic/angular';
 import { IBoard, IReadBoard } from '@modules/board';
+import { ThemeProvider } from '@modules/theme';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-side-menu',
@@ -25,16 +27,25 @@ export class SideMenuComponent {
 
   @Output() addBoard = new EventEmitter<void>();
   @Output() selectedBoard = new EventEmitter<string>();
+  @Output() hideSideMenu = new EventEmitter<boolean>();
+
+  isDarkMode$: Observable<boolean>;
 
   //Injects
-  #menu = inject(MenuController);
+  #menuCtrl = inject(MenuController);
+  #themeProv = inject(ThemeProvider);
+  constructor() {
+    this.isDarkMode$ = this.#themeProv.state.isDarkMode$;
+  }
 
   /**
    * UI Events
    */
 
-  hideSideMenu() {
-    this.#menu.close();
+  closeSideMenu() {
+    this.#menuCtrl.enable(false, 'first-menu');
+    this.#menuCtrl.close('first-menu');
+    this.hideSideMenu.emit(true);
   }
 
   add() {

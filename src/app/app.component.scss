@@ -1,0 +1,6 @@
+ion-fab {
+  --ion-safe-area-left: 0;
+  ion-fab-button {
+    --border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  }
+}

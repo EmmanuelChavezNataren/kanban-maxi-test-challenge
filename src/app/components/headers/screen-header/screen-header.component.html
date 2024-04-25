@@ -1,10 +1,12 @@
-<ion-header mode="md" class="ion-no-border" id="mainHeader">
-  <ion-toolbar>
-    <!-- MENU BUTTON -->
-    <ion-buttons slot="start" *ngIf="false">
-      <ion-menu-button />
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar [ngStyle]="{'--background': hasBackgroundToolbar ? 'var(--ion-toolbar-background)' : 'none' }">
+    <!-- BACK BUTTON -->
+    <ion-buttons slot="start">
+      <ion-button (click)="back()" icon *ngIf="hasBack">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <!-- END MENU BUTTON -->
+    <!-- END BACK BUTTON -->
 
     <!-- TITLE -->
     <ion-title class="animated-move2down">{{ title }}</ion-title>
@@ -12,8 +14,10 @@
 
     <ion-buttons slot="secondary">
       <!-- DEFAULT TEXT BUTTON -->
-      <ion-button mode="md" shape="round" fill="solid" expand="block" class="animated-focus" *ngIf="hasActionable" (click)="onactionClick()" actionable color="main">
-        <ion-icon slot="start" size="small"  *ngIf="iconActionable" [src]="iconActionable.includes('svg') ? iconActionable : null"
+      <ion-button mode="md" shape="round" fill="solid" expand="block" class="animated-focus" *ngIf="hasActionable"
+        (click)="onactionClick()" actionable color="main">
+        <ion-icon slot="start" size="small" *ngIf="iconActionable"
+          [src]="iconActionable.includes('svg') ? iconActionable : null"
           [name]="!iconActionable.includes('svg') ? iconActionable : null"></ion-icon>
         <ion-label>{{txtActionable}}</ion-label>
       </ion-button>

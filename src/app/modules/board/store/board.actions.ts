@@ -1,5 +1,10 @@
 import { createAction, props } from '@ngrx/store';
-import { BoardsData, IColumn, ITask } from '../common/models/board.model';
+import {
+  BoardsData,
+  IBoard,
+  IColumn,
+  ITask,
+} from '../common/models/board.model';
 
 export const enum BoardActionTypes {
   LOAD_BOARDS = '[Board] Load Boards',
@@ -10,6 +15,12 @@ export const enum BoardActionTypes {
 
   MOVE_TASK = '[Board] Move Task',
   MOVE_TASK_SUCCESS = '[Board] Move Task Success',
+
+  CREATE_BOARD = '[Board] Create Board',
+  CREATE_BOARD_SUCCESS = '[Board] Create Board Success',
+
+  UPDATE_BOARD = '[Board] Update Board',
+  UPDATE_BOARD_SUCCESS = '[Board] Update Board Success',
 
   /** Global Types**/
   FAILURE = '[Board] Failure',
@@ -37,6 +48,24 @@ export const moveTask = createAction(
 export const moveTaskSuccess = createAction(
   BoardActionTypes.MOVE_TASK_SUCCESS,
   props<{ updatedBoards: BoardsData }>()
+);
+
+export const createBoard = createAction(
+  BoardActionTypes.CREATE_BOARD,
+  props<{ board: IBoard }>()
+);
+export const createBoardSuccess = createAction(
+  BoardActionTypes.CREATE_BOARD_SUCCESS,
+  props<{ board: IBoard }>()
+);
+
+export const updateBoard = createAction(
+  BoardActionTypes.UPDATE_BOARD,
+  props<{ board: IBoard }>()
+);
+export const updateBoardSuccess = createAction(
+  BoardActionTypes.UPDATE_BOARD_SUCCESS,
+  props<{ board: IBoard }>()
 );
 
 /** Global Actions**/
