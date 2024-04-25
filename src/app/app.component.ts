@@ -54,7 +54,8 @@ export class AppComponent implements OnInit {
     const modal = await this.#modalCtrl.create({
       component: BoardModalComponent,
       mode: 'ios',
-      componentProps: { data: boardInit },
+      componentProps: { defaultBoard: boardInit },
+      cssClass: ['custom'],
     });
     modal.present();
     modal.onDidDismiss().then(({ data }) => {
