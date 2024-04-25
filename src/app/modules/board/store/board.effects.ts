@@ -85,15 +85,57 @@ export class BoardEffects {
       mergeMap(({ task, column }) =>
         this.boardRepo.moveTask(task, column).pipe(
           map(({ updatedBoards }) => {
-            this.utils.dismissLoading();
             return fromActions.moveTaskSuccess({ updatedBoards });
           }),
           catchError((error) => {
-            this.utils.dismissLoading();
+            this.snackbar.failure({ message: error });
             return of(fromActions.failure({ errors: error }));
           })
         )
       )
+    )
+  );
+
+  createBoard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.BoardActionTypes.CREATE_BOARD),
+      exhaustMap(({ board }) => {
+        return this.boardRepo.createBoard(board).pipe(
+          map((response) => {
+            this.snackbar.success({
+              message: 'Dashboard created successfully.',
+            });
+            return fromActions.createBoardSuccess({ board: response });
+          }),
+          catchError((error) => {
+            this.utils.dismissLoading();
+            this.snackbar.failure({ message: error });
+            return of(fromActions.failure({ errors: error }));
+          })
+        );
+      })
+    )
+  );
+
+  updateBoard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.BoardActionTypes.UPDATE_BOARD),
+      switchMap((request: any) => {
+        return this.boardRepo.updateBoard(request.contactData).pipe(
+          map((response) => {
+            this.utils.dismissLoading();
+            this.snackbar.success({
+              message: 'Dashboard updated successfully.',
+            });
+            return fromActions.updateBoardSuccess({ board: response });
+          }),
+          catchError((error) => {
+            this.utils.dismissLoading();
+            this.snackbar.failure({ message: error });
+            return of(fromActions.failure({ errors: error }));
+          })
+        );
+      })
     )
   );
 

@@ -40,6 +40,15 @@ export const boardReducer: ActionReducer<State> = createReducer(
     })
   ),
   on(
+    fromActions.moveTask,
+    fromActions.createBoard,
+    fromActions.updateBoard,
+    (state): State => ({
+      ...state,
+      isLoading: true,
+    })
+  ),
+  on(
     fromActions.loadBoardsSuccess,
     (state, { boards }): State => ({
       ...state,
@@ -66,13 +75,6 @@ export const boardReducer: ActionReducer<State> = createReducer(
     })
   ),
   on(
-    fromActions.moveTask,
-    (state): State => ({
-      ...state,
-      isLoading: true,
-    })
-  ),
-  on(
     fromActions.moveTaskSuccess,
     (state, { updatedBoards }): State => ({
       ...state,
@@ -86,6 +88,31 @@ export const boardReducer: ActionReducer<State> = createReducer(
           (board: IBoard) => board.id === state.activeBoard.id
         ) ?? state.activeBoard),
       },
+    })
+  ),
+  on(
+    fromActions.createBoardSuccess,
+    (state, { board }): State => ({
+      ...state,
+      isLoading: false,
+      succeeded: true,
+      data: [...state.data, board],
+    })
+  ),
+  on(
+    fromActions.updateBoardSuccess,
+    (state, { board }): State => ({
+      ...state,
+      isLoading: false,
+      succeeded: true,
+      data: [
+        ...state.data.map((data) => {
+          if (data.id === board.id) {
+            return { ...board };
+          }
+          return { ...data };
+        }),
+      ],
     })
   ),
   on(
